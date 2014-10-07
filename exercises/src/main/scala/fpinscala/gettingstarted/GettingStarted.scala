@@ -15,8 +15,13 @@ object MyModule {
     msg.format(x, abs(x))
   }
 
-  def main(args: Array[String]): Unit =
+  def main(args: Array[String]): Unit = {
     println(formatAbs(-42))
+    println(fib(0))
+    println(fib(1))
+    println(fib(2))
+    println(fib(10))
+  }
 
   // A definition of factorial, using a local, tail recursive function
   def factorial(n: Int): Int = {
@@ -37,8 +42,15 @@ object MyModule {
   }
 
   // Exercise 1: Write a function to compute the nth fibonacci number
+  // 0 1 1 2 3 5
+  def fib(n: Int): Int = {
+    @tailrec
+    def loop(counter: Int, prev: Int, cur: Int): Int =
+      if (counter == 0) prev
+      else loop(counter - 1, cur, prev + cur)
 
-  def fib(n: Int): Int = ???
+    loop(n, 0, 1)
+  }
 
   // This definition and `formatAbs` are very similar..
   private def formatFactorial(n: Int) = {
