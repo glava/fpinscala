@@ -71,7 +71,11 @@ object List { // `List` companion object. Contains functions for creating and wo
   }
 
   /* 
-  Again, it's somewhat subjective whether to throw an exception when asked to drop more elements than the list contains. The usual default for `drop` is not to throw an exception, since it's typically used in cases where this is not indicative of a programming error. If you pay attention to how you use `drop`, it's often in cases where the length of the input list is unknown, and the number of elements to be dropped is being computed from something else. If `drop` threw an exception, we'd have to first compute or check the length and only drop up to that many elements.  
+  Again, it's somewhat subjective whether to throw an exception when asked to drop more elements than the list contains.
+  The usual default for `drop` is not to throw an exception, since it's typically used in cases where this is not indicative
+  of a programming error. If you pay attention to how you use `drop`, it's often in cases where the length of the input
+  list is unknown, and the number of elements to be dropped is being computed from something else.
+  If `drop` threw an exception, we'd have to first compute or check the length and only drop up to that many elements.
   */
   def drop[A](l: List[A], n: Int): List[A] = 
     if (n <= 0) l
@@ -90,9 +94,15 @@ object List { // `List` companion object. Contains functions for creating and wo
     }
 
   /*
-  Note that we're copying the entire list up until the last element. Besides being inefficient, the natural recursive solution will use a stack frame for each element of the list, which can lead to stack overflows for large lists (can you see why?). With lists, it's common to use a temporary, mutable buffer internal to the function (with lazy lists or streams, which we discuss in chapter 5, we don't normally do this). So long as the buffer is allocated internal to the function, the mutation is not observable and RT is preserved.
+  Note that we're copying the entire list up until the last element.
+  Besides being inefficient, the natural recursive solution will use a stack frame for each element of the list,
+  which can lead to stack overflows for large lists (can you see why?). With lists, it's common to use a temporary,
+  mutable buffer internal to the function (with lazy lists or streams, which we discuss in chapter 5, we don't normally do this).
+  So long as the buffer is allocated internal to the function, the mutation is not observable and RT is preserved.
   
-  Another common convention is to accumulate the output list in reverse order, then reverse it at the end, which doesn't require even local mutation. We'll write a reverse function later in this chapter.
+  Another common convention is to accumulate the output list in reverse order,
+   then reverse it at the end, which doesn't require even local mutation.
+   We'll write a reverse function later in this chapter.
   */
   def init[A](l: List[A]): List[A] = 
     l match { 
@@ -113,7 +123,10 @@ object List { // `List` companion object. Contains functions for creating and wo
   }
 
   /* 
-  No, this is not possible! The reason is because _before_ we ever call our function, `f`, we evaluate its argument, which in the case of `foldRight` means traversing the list all the way to the end. We need _non-strict_ evaluation to support early termination---we discuss this in chapter 5.
+  No, this is not possible!
+  The reason is because _before_ we ever call our function, `f`, we evaluate its argument,
+  which in the case of `foldRight` means traversing the list all the way to the end.
+  We need _non-strict_ evaluation to support early termination---we discuss this in chapter 5.
   */
 
   /* 
