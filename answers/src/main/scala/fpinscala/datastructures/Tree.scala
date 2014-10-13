@@ -38,7 +38,10 @@ object Tree {
   }
 
   /* 
-  Like `foldRight` for lists, `fold` receives a "handler" for each of the data constructors of the type, and recursively accumulates some value using these handlers. As with `foldRight`, `fold(t)(Leaf(_))(Branch(_,_)) == t`, and we can use this function to implement just about any recursive function that would otherwise be defined by pattern matching.
+  Like `foldRight` for lists, `fold` receives a "handler" for each of the data constructors of the type,
+  and recursively accumulates some value using these handlers. As with `foldRight`,
+  `fold(t)(Leaf(_))(Branch(_,_)) == t`, and we can use this function to implement just about any
+  recursive function that would otherwise be defined by pattern matching.
   */
   def fold[A,B](t: Tree[A])(f: A => B)(g: (B,B) => B): B = t match {
     case Leaf(a) => f(a)
