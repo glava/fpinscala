@@ -160,4 +160,16 @@ object List { // `List` companion object. Contains functions for creating and wo
     flatMap(l)((a) => if (f(a)) List(a) else Nil)
   }
 
+  def sumLists(l: List[Int], m: List[Int]): List[Int] = (l, m) match {
+    case (_, Nil)                   => Nil
+    case (Nil, _)                   => Nil
+    case (Cons(x, xs), Cons(y, ys)) => Cons(x +y, sumLists(xs, ys))
+  }
+
+  def zipWith[A](l: List[A], m: List[A])(f: (A, A) => A): List[A] = (l, m) match {
+    case (_, Nil) => Nil
+    case (Nil, _) => Nil
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
+  }
+
 }
